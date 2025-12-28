@@ -2,7 +2,6 @@ const { User } = require("../models");
 const httpStatus = require("http-status");
 const ApiError = require("../utils/ApiError");
 const bcrypt = require("bcryptjs");
-const { generateAuthTokens } = require('./token.service')
 
 
 /**
@@ -23,9 +22,8 @@ async function getUserById(id) {
 async function getUserAddressById(id, q) {
     const user = await User.findOne({ _id: id }, { address: 1, email: 1 });
     if (q) {
-        return { address: user.address }
+        return { address: user.address };
     }
-
     return { _id: id, address: user.address, email: user.email };
 }
 
@@ -49,7 +47,7 @@ async function setAddress(userOrId, address) {
 
     user.address = address;
     await user.save();
-    return { address: user.address };
+    return user;
 }
 
 
